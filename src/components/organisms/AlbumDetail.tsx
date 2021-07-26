@@ -18,7 +18,7 @@ class AlbumDetail extends Component<AlbumItemProps> {
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin: 0px 10px;
+      margin: 10px;
     `;
 
     const Title = styled.Text`

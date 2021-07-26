@@ -1,5 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
-import {View, Text, FlatList, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import IAlbum from '../../models/IAlbum';
 import getData from '../../service/json_placeholder';
 import AlbumItem from '../molecules/AlbumItem';
@@ -15,6 +21,13 @@ const AlbumList: FC<AlbumListProps> = ({setSelected}) => {
     getData().then(v => setAlbums(v));
   }, []);
 
+  const styles = StyleSheet.create({
+    loading: {
+      justifyContent: 'center',
+      height: 200,
+    },
+  });
+
   return (
     <View>
       {albums.length > 0 ? (
@@ -25,7 +38,9 @@ const AlbumList: FC<AlbumListProps> = ({setSelected}) => {
           )}
         />
       ) : (
-        <ActivityIndicator color="#000" />
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       )}
     </View>
   );
