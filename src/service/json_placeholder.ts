@@ -2,7 +2,7 @@ import axios from 'axios';
 import IAlbum from '../models/IAlbum';
 import IPhoto from '../models/IPhoto';
 
-export default async function getData() {
+export default async function getData(): Promise<IAlbum[]> {
   try {
     const responseAlbums = await axios.get(
       'https://jsonplaceholder.typicode.com/albums',
@@ -22,5 +22,6 @@ export default async function getData() {
     return albums;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
