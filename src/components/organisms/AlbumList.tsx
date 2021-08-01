@@ -1,24 +1,16 @@
 import React, {FC, useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
-import IAlbum from '../../models/IAlbum';
-import getData from '../../service/json_placeholder';
+import {View, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {IState} from '../../models/IState';
+import {fetchAlbums} from '../../store/actions/album';
 import AlbumItem from '../molecules/AlbumItem';
 
-export interface AlbumListProps {
-  setSelected: React.Dispatch<React.SetStateAction<IAlbum | null>>;
-}
-
-const AlbumList: FC<AlbumListProps> = ({setSelected}) => {
-  const [albums, setAlbums] = useState<IAlbum[]>([]);
+const AlbumList: FC = () => {
+  const albums = useSelector((state: IState) => state.Album.albums);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getData().then(v => setAlbums(v));
+    dispatch(fetchAlbums());
   }, []);
 
   const styles = StyleSheet.create({
@@ -33,9 +25,7 @@ const AlbumList: FC<AlbumListProps> = ({setSelected}) => {
       {albums.length > 0 ? (
         <FlatList
           data={albums}
-          renderItem={({item}) => (
-            <AlbumItem item={item} setSelected={setSelected} />
-          )}
+          renderItem={({item}) => <AlbumItem item={item} />}
         />
       ) : (
         <View style={styles.loading}>

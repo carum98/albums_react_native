@@ -1,15 +1,16 @@
-import {styled} from '@emotion/native/types/base';
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import IAlbum from '../../models/IAlbum';
+import {selectAlbum} from '../../store/actions/album';
 
 export interface AlbumItemProps {
   item: IAlbum;
-  setSelected: React.Dispatch<React.SetStateAction<IAlbum | null>>;
 }
 
-const AlbumItem: FC<AlbumItemProps> = ({item, setSelected}) => {
+const AlbumItem: FC<AlbumItemProps> = ({item}) => {
   const {id, userId, title} = item;
+  const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
     itemRow: {
@@ -32,7 +33,7 @@ const AlbumItem: FC<AlbumItemProps> = ({item, setSelected}) => {
   });
 
   return (
-    <TouchableOpacity onPress={() => setSelected(item)}>
+    <TouchableOpacity onPress={() => dispatch(selectAlbum(item))}>
       <View style={styles.itemRow}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.subTitle}>

@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
 import IPhoto from '../../models/IPhoto';
 
 export interface ImageItemProps {

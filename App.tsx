@@ -7,18 +7,28 @@
  *
  * @format
  */
-
 import React from 'react';
 import {SafeAreaView} from 'react-native';
+import {Provider} from 'react-redux';
+import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 
-import {} from 'react-native/Libraries/NewAppScreen';
 import HomeScreen from './src/components/screens/HomeScreen';
+
+import thunk from 'redux-thunk';
+import * as reducers from './src/store/reducers';
+
+const store = createStore(
+  combineReducers(reducers),
+  applyMiddleware(compose(thunk)),
+);
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <HomeScreen></HomeScreen>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        <HomeScreen></HomeScreen>
+      </SafeAreaView>
+    </Provider>
   );
 };
 
