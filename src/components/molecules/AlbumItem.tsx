@@ -1,16 +1,15 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useAlbums} from '../../context/album-context';
 import IAlbum from '../../models/IAlbum';
-import {selectAlbum} from '../../store/actions/album';
-
 export interface AlbumItemProps {
   item: IAlbum;
 }
 
 const AlbumItem: FC<AlbumItemProps> = ({item}) => {
-  const {id, userId, title} = item;
-  const dispatch = useDispatch();
+  const {userId, title} = item;
+
+  const {setSelected} = useAlbums();
 
   const styles = StyleSheet.create({
     itemRow: {
@@ -33,7 +32,10 @@ const AlbumItem: FC<AlbumItemProps> = ({item}) => {
   });
 
   return (
-    <TouchableOpacity onPress={() => dispatch(selectAlbum(item))}>
+    <TouchableOpacity
+      onPress={() => {
+        setSelected(item);
+      }}>
       <View style={styles.itemRow}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.subTitle}>

@@ -1,9 +1,8 @@
 import styled from '@emotion/native';
 import React, {FC} from 'react';
 import {View, FlatList} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useAlbums} from '../../context/album-context';
 import IAlbum from '../../models/IAlbum';
-import {selectAlbum} from '../../store/actions/album';
 import {AlbumItemProps} from '../molecules/AlbumItem';
 import ImageItem from '../molecules/ImageItem';
 
@@ -13,7 +12,8 @@ export interface AlbumDetailProp {
 
 const AlbumDetail: FC<AlbumItemProps> = ({item}) => {
   const {title, photos} = item;
-  const dispatch = useDispatch();
+
+  const {setSelected} = useAlbums();
 
   const AppBar = styled.View`
     display: flex;
@@ -49,7 +49,7 @@ const AlbumDetail: FC<AlbumItemProps> = ({item}) => {
       <AppBar>
         <BackButton
           onPress={() => {
-            dispatch(selectAlbum(null));
+            setSelected(null);
           }}>
           <ButtonText>{'Back'}</ButtonText>
         </BackButton>
