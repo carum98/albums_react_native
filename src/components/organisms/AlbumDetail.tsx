@@ -2,18 +2,10 @@ import styled from '@emotion/native';
 import React, {FC} from 'react';
 import {View, FlatList} from 'react-native';
 import {useAlbums} from '../../context/album-context';
-import IAlbum from '../../models/IAlbum';
-import {AlbumItemProps} from '../molecules/AlbumItem';
 import ImageItem from '../molecules/ImageItem';
 
-export interface AlbumDetailProp {
-  item: IAlbum;
-}
-
-const AlbumDetail: FC<AlbumItemProps> = ({item}) => {
-  const {title, photos} = item;
-
-  const {setSelected} = useAlbums();
+const AlbumDetail: FC = () => {
+  const {selected} = useAlbums();
 
   const AppBar = styled.View`
     display: flex;
@@ -29,37 +21,16 @@ const AlbumDetail: FC<AlbumItemProps> = ({item}) => {
     margin-left: 10px;
   `;
 
-  const BackButton = styled.TouchableOpacity`
-    width: 60px;
-    height: 30px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    background-color: #4d88ff;
-    color: white;
-  `;
-
-  const ButtonText = styled.Text`
-    color: white;
-    font-weight: bold;
-  `;
-
   return (
     <View>
       <AppBar>
-        <BackButton
-          onPress={() => {
-            setSelected(null);
-          }}>
-          <ButtonText>{'Back'}</ButtonText>
-        </BackButton>
         <Title numberOfLines={1} ellipsizeMode="tail">
-          {title}
+          {selected?.title}
         </Title>
       </AppBar>
 
       <FlatList
-        data={photos}
+        data={selected?.photos}
         renderItem={({item}) => <ImageItem item={item} />}
         numColumns={3}
       />

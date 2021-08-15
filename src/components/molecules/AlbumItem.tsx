@@ -4,9 +4,10 @@ import {useAlbums} from '../../context/album-context';
 import IAlbum from '../../models/IAlbum';
 export interface AlbumItemProps {
   item: IAlbum;
+  navigation: any;
 }
 
-const AlbumItem: FC<AlbumItemProps> = ({item}) => {
+const AlbumItem: FC<AlbumItemProps> = ({item, navigation}) => {
   const {userId, title} = item;
 
   const {setSelected} = useAlbums();
@@ -18,6 +19,8 @@ const AlbumItem: FC<AlbumItemProps> = ({item}) => {
       padding: 10,
       backgroundColor: '#e6f2ff',
       borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#ced9ff',
     },
     title: {
       fontWeight: 'bold',
@@ -35,6 +38,7 @@ const AlbumItem: FC<AlbumItemProps> = ({item}) => {
     <TouchableOpacity
       onPress={() => {
         setSelected(item);
+        navigation.push('Detail');
       }}>
       <View style={styles.itemRow}>
         <Text style={styles.title}>{title}</Text>
